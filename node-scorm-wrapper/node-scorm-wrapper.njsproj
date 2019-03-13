@@ -31,21 +31,41 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="jquery.js" />
+    <Compile Include="jquery.min.js" />
+    <Compile Include="jquery.slim.js" />
+    <Compile Include="jquery.slim.min.js" />
+    <Compile Include="public\javascripts\uploadpif.js" />
+    <Compile Include="public\jquery\core.js" />
+    <Compile Include="public\materialize\js\materialize.js" />
+    <Compile Include="public\materialize\js\materialize.min.js" />
     <Compile Include="routes\index.js" />
+    <Compile Include="routes\uploadpif.js" />
     <Compile Include="routes\users.js" />
+    <Content Include="jquery.min.map" />
+    <Content Include="jquery.slim.min.map" />
+    <Content Include="libman.json" />
+    <Content Include="materialize.min.css" />
     <Content Include="package.json" />
+    <Content Include="public\materialize\css\materialize.css" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
     <Content Include="views\index.pug" />
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
+    <Content Include="views\uploadpif.pug" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
+    <Folder Include="public\jquery\" />
+    <Folder Include="public\materialize\" />
+    <Folder Include="public\materialize\css\" />
+    <Folder Include="public\materialize\js\" />
     <Folder Include="public\stylesheets\" />
     <Folder Include="routes\" />
+    <Folder Include="uploads\" />
     <Folder Include="views\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->

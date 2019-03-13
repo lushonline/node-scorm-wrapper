@@ -1,7 +1,17 @@
 ﻿doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/main.css')
-  body
-    block content
+	block head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/main.css')
+
+		link(rel="stylesheet" href="/materialize/css/materialize.min.css")
+		script(src="/jquery/jquery.min.js")
+		script(src="/materialize/js/materialize.min.js")
+		script(src='/javascripts/log4javascript.js')
+		script(src='/javascripts/Parser1p2.js')
+		script(src='/javascripts/Rte1p2Api.js')
+		script(src='/javascripts/RteApiSite.js')
+		script(src='/javascripts/typevalidators1p2.js')
+		script(src='/javascripts/stringfunctions.js')
+	body(class="container")
+		block content
