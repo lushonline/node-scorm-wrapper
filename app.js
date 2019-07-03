@@ -1,5 +1,4 @@
-﻿const debug = require('debug');
-const express = require('express');
+﻿const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -60,8 +59,4 @@ app.use((err, _req, res, _next) => {
   });
 });
 
-app.set('port', process.env.PORT || 3000);
-
-const server = app.listen(app.get('port'), () => {
-  debug(`Express server listening on port ${server.address().port}`);
-});
+module.exports = app;
