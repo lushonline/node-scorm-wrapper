@@ -4,26 +4,26 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const routes = require('./routes/index');
-const uploadpif = require('./routes/uploadpif');
+const home = require('./routes/home');
+const upload = require('./routes/upload');
 const wrapper = require('./routes/wrapper');
 
 const app = express();
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// uncomment after placing your favicon in /public
-// app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+// parse form data
+app.use(bodyParser.urlencoded({ extended: true }));
+// parse application/json
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/uploadpif', uploadpif);
+app.use(express.static('public'));
+app.use(logger('dev'));
+
+app.use('/', home);
+app.use('/upload', upload);
 app.use('/wrapper', wrapper);
 
 // catch 404 and forward to error handler
