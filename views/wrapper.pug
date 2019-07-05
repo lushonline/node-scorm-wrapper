@@ -10,8 +10,20 @@ block append head
   script(src='/javascripts/cookies.js')
 
 block content
-    .row
-      #myLogger
-      script.
-        var response = !{JSON.stringify(responsedata).replace(/<\//g, "<\\/")}
-      script(src="/javascripts/wrapper-client.js")
+
+    if scormList
+      .row
+        ul
+        each scorm in scormList
+          li 
+            a(href=scorm.wrapperurl) #{scorm.title} (Uploaded: #{scorm.created})
+            |  
+            a(href=scorm.wrapperdeleteurl) DELETE
+        else
+          li There are no scorm items.
+    else
+      .row
+        #myLogger
+        script.
+          var response = !{JSON.stringify(responsedata).replace(/<\//g, "<\\/")}
+        script(src="/javascripts/wrapper-client.js")

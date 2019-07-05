@@ -3,7 +3,6 @@ html
 	block head
 		title= title
 		link(rel='stylesheet', href='/stylesheets/main.css')
-
 		link(rel="stylesheet" href="/materialize/css/materialize.min.css")
 		script(src="/jquery/jquery.min.js")
 		script(src="/materialize/js/materialize.min.js")
@@ -14,4 +13,12 @@ html
 		script(src='/javascripts/typevalidators1p2.js')
 		script(src='/javascripts/stringfunctions.js')
 	body(class="container")
+		nav
+			.nav-wrapper.grey
+				a.brand-logo.right(href='#') SCORM Wrapper
+				ul#nav-mobile.left.hide-on-med-and-down
+					li
+						a(href='/upload') Upload New PIF
+					li
+						a(href='/wrapper') List Uploads
 		block content

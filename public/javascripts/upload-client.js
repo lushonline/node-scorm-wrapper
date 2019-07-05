@@ -6,12 +6,12 @@ $(function() {
     $('#uploadBtn').prop('disabled', false);
   });
 
-  $(document).on('click', '.launchcourse', function() {
+/*   $(document).on('click', '.launchcourse', function() {
     event.preventDefault();
 
     var form = $(document.createElement('form'));
-    $(form).attr('action', '/wrapper');
-    $(form).attr('method', 'POST');
+    $(form).attr('action', '/wrapper/'+responseData.id);
+    $(form).attr('method', 'GET');
     $(form).attr('target', '_blank');
 
     var input = $('<input>')
@@ -26,7 +26,7 @@ $(function() {
       .submit()
       .remove();
     return false;
-  });
+  }); */
 
   $('#scormpifupload').on('submit', function(event) {
     event.preventDefault();
@@ -57,11 +57,10 @@ $(function() {
         if (data.success) {
           responseData = data;
           var template =
-            '<div class="col m4 offset-m4"><div class="card-panel teal"><span class="white-text launchcourse">' +
-            data.title +
+            '<div class="col m4 offset-m4"><div class="card-panel grey"><span class="white-text launchcourse">' +
+            '<a href="wrapper/'+data.id+'">'+data.title + '</a>'
             '</span></div></div>';
           $('.img-preview').append(template);
-          //$('#launchBtn').prop('disabled', false);
         } else {
           responseData = {};
           for (var i = 0; i < data.errors.length; i++) {

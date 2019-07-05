@@ -4,14 +4,14 @@ block content
 	.row
 		form#scormpifupload.col.m4.offset-m4(enctype='multipart/form-data', method='post')
 			.file-field.input-field
-				.btn
+				.btn.grey
 					span File
 					input(type='file', name='scormpif', id='scormpif')
 				.file-path-wrapper
 					input.file-path.validate(type='text', placeholder='Upload SCORM PIF')
 			.input-field
-				button.waves-effect.waves-light.btn(type='submit', id='uploadBtn', disabled) Submit
+				button.btn.grey(type='submit', id='uploadBtn', disabled) Submit
 			.progress(style='display:none;')
-				.indeterminate
+				.indeterminate.grey
 	.row.img-preview(id='uploads')
 	script(src="/javascripts/upload-client.js")

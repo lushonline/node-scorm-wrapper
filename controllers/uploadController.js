@@ -5,9 +5,38 @@ const _ = require('lodash');
 const urljoin = require('url-join');
 const libxml = require('libxmljs');
 const extract = require('extract-zip');
+const uuid = require('uuidv4');
+const rimraf = require('rimraf');
+const { promisify } = require('util');
 
+const writeFile = promisify(fs.writeFile);
+const readFile = promisify(fs.readFile);
+
+const saveResponses = async (uploadPath, response) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const fullPath = path.join(uploadPath, 'uploads.json');
+      if (!fs.existsSync(fullPath)) {
+        const uploads = {};
+        uploads.lastUpdated = new Date();
+        uploads.scorms = [];
+        uploads.scorms.push(response);
+        await writeFile(fullPath, JSON.stringify(uploads)).then(resolve());
+      } else {
+        await readFile(fullPath).then(async data => {
+          const uploads = JSON.parse(data);
+          uploads.scorms.push(response);
+          uploads.lastUpdated = new Date();
+          await writeFile(fullPath, JSON.stringify(uploads)).then(resolve());
+        });
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 // Handle
-const post = (req, res) => {
+const post = async (req, res) => {
   req.setTimeout(500000);
 
   const response = {};
@@ -21,6 +50,7 @@ const post = (req, res) => {
   response.sco = null;
   response.organization = null;
   response.organizationItem = null;
+  response.id = null;
 
   const { file } = req;
 
@@ -35,12 +65,16 @@ const post = (req, res) => {
 
     res.json(JSON.stringify(response));
   } else {
-    const uniquePath = `${req.file.filename}_${Date.now()}`;
-    const fileExtractPath = path.join(process.cwd(), req.uploadPath, uniquePath);
+    response.id = uuid();
+    response.created = new Date();
+    const fileExtractPath = path.join(process.cwd(), req.uploadPath, response.id);
 
-    extract(req.file.path, { dir: fileExtractPath }, err => {
+    extract(req.file.path, { dir: fileExtractPath }, async err => {
       // extraction is complete. make sure to handle the err
       if (err) throw err;
+
+      // We unzipped so now delete the upload
+      rimraf(req.file.path, () => {});
 
       if (!fs.existsSync(path.join(fileExtractPath, 'imsmanifest.xml'))) {
         throw new Error('File did not contain an imsmanifest.xml');
@@ -85,7 +119,7 @@ const post = (req, res) => {
           const organizationTitle = organization.get('xmlns:title', namespaces);
 
           if (!_.isNull(resourceHref)) {
-            launchPath = urljoin('uploads', uniquePath, resourceHref).replace('\\', '/');
+            launchPath = urljoin('/uploads', response.id, resourceHref).replace('\\', '/');
           }
 
           response.message = 'File uploaded and unzipped';
@@ -94,6 +128,9 @@ const post = (req, res) => {
           response.datafromlms = itemDataFromLMS ? itemDataFromLMS.text() : '';
           response.mastery = itemMastery ? _.toNumber(itemMastery.text()) : 100;
           response.success = true;
+
+          // Save a JSON file
+          await saveResponses(path.join(process.cwd(), req.uploadPath), response);
           res.json(JSON.stringify(response));
         } else {
           response.errors.push('Error processing imsmanifest.xml');

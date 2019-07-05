@@ -25,9 +25,9 @@ const upload = multer({ storage });
 // Contact routes
 router.get('/', uploadController.view);
 
-router.post('/', upload.single('scormpif'), (req, res) => {
+router.post('/', upload.single('scormpif'), (req, res, next) => {
   req.uploadPath = uploadPath;
-  uploadController.post(req, res);
+  uploadController.post(req, res, next);
 });
 
 // Export API routes
