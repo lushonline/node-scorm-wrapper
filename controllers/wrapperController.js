@@ -104,7 +104,7 @@ const deleteByUUID = async (req, res, next) => {
   await deleteSCORMByUUID(path.join(process.cwd(), req.uploadPath), uuid)
     .then(() => {
       rimraf(path.join(process.cwd(), req.uploadPath, uuid), () => {
-        res.redirect('/wrapper');
+        res.redirect(req.baseUrl);
       });
     })
     .catch(error => {
