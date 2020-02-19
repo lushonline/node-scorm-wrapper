@@ -1,7 +1,7 @@
 /* MICROSOFT PROVIDES SAMPLE CODE "AS IS" AND WITH ALL FAULTS, 
-AND WITHOUT ANY WARRANTY WHATSOEVER.  MICROSOFT EXPRESSLY DISCLAIMS ALL WARRANTIES 
+AND WITHOUT ANY WARRANTY WHATSOEVER.ï¿½ MICROSOFT EXPRESSLY DISCLAIMS ALL WARRANTIES 
 WITH RESPECT TO THE SOURCE CODE, INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THERE IS NO WARRANTY OF TITLE OR 
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.ï¿½ THERE IS NO WARRANTY OF TITLE OR 
 NONINFRINGEMENT FOR THE SOURCE CODE. */
 
 /* Copyright (c) Microsoft Corporation. All rights reserved. */
@@ -13,14 +13,14 @@ function Rte1p2Api(apiSite, parser, validator)
 	var Parser = parser; 
 	var Validator = validator;
 	var isDirty = false;
-	
-	var RteStatus = "NotInitialized";
+
+	this.Status = "NotInitialized";
 
 	this.LMSGetValue = InternalGetValue;
 	function InternalGetValue(name)
 	{
 		ApiSite.Logger.info(String.format('LMSGetValue() Name: {0}', name));
-		switch (RteStatus)
+		switch (this.Status)
 		{
 			case "Running":
 				break;
@@ -99,7 +99,7 @@ function Rte1p2Api(apiSite, parser, validator)
 			for (var collectionDataModelName in dataModel.IndexRequirements)
 			{
 				// collectionDataModelName is like "cmi.objectives._count"
-				// dataModelIndex is like “2”, indicates current index of the 
+				// dataModelIndex is like ï¿½2ï¿½, indicates current index of the 
 				// accessing data model.
 				var dataModelIndex = dataModel.IndexRequirements[collectionDataModelName];
 				var currentCount = InternalGetValue(collectionDataModelName + "._count");
@@ -159,7 +159,7 @@ function Rte1p2Api(apiSite, parser, validator)
 	function InternalSetValue(name, value)
 	{
 		ApiSite.Logger.info(String.format('LMSSetValue() Called. Name: {0} Value: {1}', name, value));
-		switch (RteStatus)
+		switch (this.Status)
 		{
 			case "Running":
 				break;
@@ -212,7 +212,7 @@ function Rte1p2Api(apiSite, parser, validator)
 			for (var collectionDataModelName in dataModel.IndexRequirements)
 			{
 				// collectionDataModelName is like "cmi.objectives._count"
-				// dataModelIndex is like “2”, indicates current index of the 
+				// dataModelIndex is like ï¿½2ï¿½, indicates current index of the 
 				// accessing data model.
 				var dataModelIndex = dataModel.IndexRequirements[collectionDataModelName];
 				var currentCount = InternalGetValue(collectionDataModelName + "._count");
@@ -279,7 +279,7 @@ function Rte1p2Api(apiSite, parser, validator)
 			for (var collectionDataModelName in dataModel.IndexRequirements)
 			{
 				// collectionDataModelName is like "cmi.objectives._count"
-				// dataModelIndex is like “2”, indicates current index of the 
+				// dataModelIndex is like ï¿½2ï¿½, indicates current index of the 
 				// accessing data model.
 				var dataModelIndex = dataModel.IndexRequirements[collectionDataModelName];
 				var currentCount = InternalGetValue(collectionDataModelName + "._count");
@@ -307,7 +307,7 @@ function Rte1p2Api(apiSite, parser, validator)
 			return "false";
 		}
 		
-		switch (RteStatus)
+		switch (this.Status)
 		{
 			case "Running":
 				// already initialized
@@ -323,7 +323,7 @@ function Rte1p2Api(apiSite, parser, validator)
 				throw "Internal error. The Rte status was not valid.";
 		}
 		
-		RteStatus = "Running";
+		this.Status = "Running";
 		InternalClearError();
 		return "true";
 	}
@@ -339,7 +339,7 @@ function Rte1p2Api(apiSite, parser, validator)
 			return "false";
 		}
 		
-		switch (RteStatus)
+		switch (this.Status)
 		{
 			case "Running":
 				break;
@@ -357,8 +357,8 @@ function Rte1p2Api(apiSite, parser, validator)
 
 		ApiSite.Terminate(str);
 
-		//RteStatus = "Terminated";
-		RteStatus = "NotInitialized";
+		//this.Status = "Terminated";
+		this.Status = "NotInitialized";
 		
 		InternalClearError();
 		return "true";
@@ -374,7 +374,7 @@ function Rte1p2Api(apiSite, parser, validator)
 			InternalSetError("201", "201-1", "LMSCommit"); 
 			return "false";
 		}
-		switch (RteStatus)
+		switch (this.Status)
 		{
 			case "Running":
 				break;

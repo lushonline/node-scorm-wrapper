@@ -126,7 +126,7 @@ const post = async (req, res) => {
           response.launch = launchPath;
           response.title = organizationTitle ? organizationTitle.text() : 'Unknown';
           response.datafromlms = itemDataFromLMS ? itemDataFromLMS.text() : '';
-          response.mastery = itemMastery ? _.toNumber(itemMastery.text()) : 100;
+          response.mastery = itemMastery ? _.toNumber(itemMastery.text()) : null;
           response.success = true;
 
           // Save a JSON file

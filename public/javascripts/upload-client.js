@@ -57,9 +57,9 @@ $(function() {
         if (data.success) {
           responseData = data;
           var template =
-            '<div class="col m4 offset-m4"><div class="card-panel grey"><span class="white-text launchcourse">' +
-            '<a href="wrapper/'+data.id+'">'+data.title + '</a>'
-            '</span></div></div>';
+            '<div class="col m4 offset-m4"><div class="card-panel grey">' +
+            '<a href="wrapper/'+data.id+'"><span class="white-text launchcourse">'+ data.title + '</span></a>'
+            '</div></div>';
           $('.img-preview').append(template);
         } else {
           responseData = {};

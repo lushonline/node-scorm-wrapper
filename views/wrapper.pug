@@ -7,7 +7,6 @@ block append head
   script(src='/javascripts/RteApiSite.js')
   script(src='/javascripts/typevalidators1p2.js')
   script(src='/javascripts/stringfunctions.js')
-  script(src='/javascripts/cookies.js')
 
 block content
 
@@ -22,6 +21,10 @@ block content
         else
           li There are no scorm items.
     else
+      .row
+        #playerButtons
+          button.btn.grey(id='btnLaunch') Launch Course
+          button.btn.grey(id='btnReset') Reset SCORM Data
       .row
         #myLogger
         script.
