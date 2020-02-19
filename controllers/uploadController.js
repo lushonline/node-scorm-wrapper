@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 const fs = require('fs');
 const path = require('path');
 const zipfile = require('is-zip-file');
