@@ -6,7 +6,7 @@ const _ = require('lodash');
 const urljoin = require('url-join');
 const libxml = require('libxmljs');
 const extract = require('extract-zip');
-const uuid = require('uuidv4');
+const { uuid } = require('uuidv4');
 const rimraf = require('rimraf');
 const { promisify } = require('util');
 
