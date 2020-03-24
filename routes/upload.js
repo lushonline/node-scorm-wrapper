@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     // call the callback, passing it the dynamic file name
     cb(null, file.originalname);
-  }
+  },
 });
 
 // overwrite the upload variable

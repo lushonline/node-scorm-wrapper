@@ -4,16 +4,23 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Server",
-            "program": "${workspaceFolder}/start.js",
-            "serverReadyAction": {
-              "pattern": "Express is running on port ([0-9]+)",
-              "uriFormat": "http://localhost:%s",
-              "action": "debugWithChrome",
-            }
-          }
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Server",
+        "program": "${workspaceFolder}/start.js",
+        "serverReadyAction": {
+          "pattern": "Express is running on port ([0-9]+)",
+          "uriFormat": "http://localhost:%s",
+          "action": "debugWithChrome"
+        }
+      },
+      {
+        "name": "Docker Node.js Launch",
+        "type": "docker",
+        "request": "launch",
+        "preLaunchTask": "docker-run: debug",
+        "platform": "node"
+      }
     ]
 }

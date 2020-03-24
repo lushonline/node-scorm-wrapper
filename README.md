@@ -1,3 +1,1 @@
-﻿# node-scorm-wrapper
-
-
+# node-scorm-wrapper

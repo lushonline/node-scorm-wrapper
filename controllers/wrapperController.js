@@ -11,15 +11,15 @@ const readFile = promisify(fs.readFile);
 const post = (req, res) => {
   res.render('wrapper', {
     title: 'SCORM RTE Test Harness',
-    responsedata: JSON.parse(req.body.response)
+    responsedata: JSON.parse(req.body.response),
   });
 };
 
-const getAllSCORM = async uploadPath => {
+const getAllSCORM = async (uploadPath) => {
   return new Promise(async (resolve, reject) => {
     try {
       const fullPath = path.join(uploadPath, 'uploads.json');
-      await readFile(fullPath).then(data => {
+      await readFile(fullPath).then((data) => {
         const uploads = JSON.parse(data);
         resolve(uploads);
       });
@@ -32,8 +32,8 @@ const getAllSCORM = async uploadPath => {
 const getSCORMByUUID = async (uploadPath, uuid) => {
   return new Promise(async (resolve, reject) => {
     try {
-      await getAllSCORM(uploadPath).then(data => {
-        const result = data.scorms.filter(value => {
+      await getAllSCORM(uploadPath).then((data) => {
+        const result = data.scorms.filter((value) => {
           return value.id === uuid;
         });
         if (result.length === 0) throw new Error('SCORM Not Found');
@@ -48,10 +48,10 @@ const getSCORMByUUID = async (uploadPath, uuid) => {
 const deleteSCORMByUUID = async (uploadPath, uuid) => {
   return new Promise(async (resolve, reject) => {
     try {
-      await getAllSCORM(uploadPath).then(async data => {
+      await getAllSCORM(uploadPath).then(async (data) => {
         const updated = data;
         updated.lastUpdated = new Date();
-        const results = data.scorms.filter(value => {
+        const results = data.scorms.filter((value) => {
           return value.id !== uuid;
         });
         updated.scorms = results;
@@ -68,21 +68,21 @@ const deleteSCORMByUUID = async (uploadPath, uuid) => {
 const getByUUID = async (req, res, next) => {
   const { uuid } = req.params;
   await getSCORMByUUID(path.join(process.cwd(), req.uploadPath), uuid)
-    .then(response => {
+    .then((response) => {
       res.render('wrapper', {
         title: 'SCORM RTE Test Harness',
-        responsedata: response
+        responsedata: response,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       next(error);
     });
 };
 
 const getAll = async (req, res, next) => {
   await getAllSCORM(path.join(process.cwd(), req.uploadPath))
-    .then(response => {
-      const scormList = response.scorms.map(value => {
+    .then((response) => {
+      const scormList = response.scorms.map((value) => {
         const result = value;
         result.wrapperurl = `wrapper/${result.id}`;
         result.wrapperdeleteurl = `wrapper/${result.id}/delete`;
@@ -92,10 +92,10 @@ const getAll = async (req, res, next) => {
       res.render('wrapper', {
         title: 'SCORM RTE Test Harness',
         responsedata: {},
-        scormList
+        scormList,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       next(error);
     });
 };
@@ -108,7 +108,7 @@ const deleteByUUID = async (req, res, next) => {
         res.redirect(req.baseUrl);
       });
     })
-    .catch(error => {
+    .catch((error) => {
       next(error);
     });
 };
@@ -117,5 +117,5 @@ module.exports = {
   post,
   getByUUID,
   getAll,
-  deleteByUUID
+  deleteByUUID,
 };

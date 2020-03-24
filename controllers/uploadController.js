@@ -24,7 +24,7 @@ const saveResponses = async (uploadPath, response) => {
         uploads.scorms.push(response);
         await writeFile(fullPath, JSON.stringify(uploads)).then(resolve());
       } else {
-        await readFile(fullPath).then(async data => {
+        await readFile(fullPath).then(async (data) => {
           const uploads = JSON.parse(data);
           uploads.scorms.push(response);
           uploads.lastUpdated = new Date();
@@ -70,7 +70,7 @@ const post = async (req, res) => {
     response.created = new Date();
     const fileExtractPath = path.join(process.cwd(), req.uploadPath, response.id);
 
-    extract(req.file.path, { dir: fileExtractPath }, async err => {
+    extract(req.file.path, { dir: fileExtractPath }, async (err) => {
       // extraction is complete. make sure to handle the err
       if (err) throw err;
 
@@ -94,7 +94,7 @@ const post = async (req, res) => {
         const xmlDoc = libxml.parseXmlString(content);
 
         // Filter from the erro list any with number 99 - XML_WAR_NS_URI
-        const errors = _.filter(xmlDoc.errors, o => {
+        const errors = _.filter(xmlDoc.errors, (o) => {
           return o.code !== 99;
         });
 
@@ -103,7 +103,7 @@ const post = async (req, res) => {
           const namespaces = {
             xmlns: 'http://www.imsproject.org/xsd/imscp_rootv1p1p2',
             adlcp: 'http://www.adlnet.org/xsd/adlcp_rootv1p2',
-            xsi: 'http://www.w3.org/2001/XMLSchema-instance'
+            xsi: 'http://www.w3.org/2001/XMLSchema-instance',
           };
 
           let xpathstr = '/xmlns:manifest/xmlns:resources/xmlns:resource[@adlcp:scormtype="sco"]';
@@ -154,5 +154,5 @@ const view = (req, res) => {
 
 module.exports = {
   post,
-  view
+  view,
 };
