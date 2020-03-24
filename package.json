@@ -32,7 +32,8 @@
         "pug": "^2.0.4",
         "serve-favicon": "^2.3.0",
         "url-join": "^4.0.1",
-        "uuidv4": "^6.0.6"
+        "uuidv4": "^6.0.6",
+        "rimraf": "^3.0.2"
     },
     "devDependencies": {
         "auto-changelog": "^1.16.2",
@@ -43,7 +44,6 @@
         "eslint-plugin-import": "^2.20.1",
         "eslint-plugin-prettier": "^3.1.2",
         "nodemon": "^2.0.2",
-        "prettier": "^2.0.2",
-        "rimraf": "^3.0.2"
+        "prettier": "^2.0.2"
     }
 }
