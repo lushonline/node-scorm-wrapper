@@ -3,6 +3,8 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+// eslint-disable-next-line no-unused-vars
+const pug = require('pug');
 
 const home = require('./routes/home');
 const upload = require('./routes/upload');
