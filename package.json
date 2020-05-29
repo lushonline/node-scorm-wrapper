@@ -1,6 +1,6 @@
 {
     "name": "node-scorm-wrapper",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "node-scorm-wrapper",
     "main": "start.js",
     "scripts": {
