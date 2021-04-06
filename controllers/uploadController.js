@@ -10,6 +10,7 @@ const extract = require('extract-zip-promise');
 const { uuid } = require('uuidv4');
 const rimraf = require('rimraf');
 const { promisify } = require('util');
+const { accessSafe } = require('access-safe');
 
 const writeFile = promisify(fs.writeFile);
 const readFile = promisify(fs.readFile);
@@ -112,8 +113,14 @@ const post = async (req, res) => {
 
           xpathstr = `/xmlns:manifest/xmlns:organizations/xmlns:organization/xmlns:item[@identifierref="${resourceId}"]`;
           const item = xpathSelect(xpathstr, xmlDoc, true);
-          const itemDataFromLMS = xpathSelect('./adlcp:datafromlms', item, true).textContent;
-          const itemMastery = xpathSelect('./adlcp:masteryscore', item, true).textContent;
+          const itemDataFromLMS = accessSafe(
+            () => xpathSelect('./adlcp:datafromlms', item, true).textContent,
+            null
+          );
+          const itemMastery = accessSafe(
+            () => xpathSelect('./adlcp:masteryscore', item, true).textContent,
+            null
+          );
 
           const organization = item.parentNode;
           const organizationTitle = xpathSelect('xmlns:title', organization, true).textContent;
