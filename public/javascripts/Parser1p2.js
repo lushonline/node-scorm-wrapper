@@ -1,7 +1,7 @@
-/* MICROSOFT PROVIDES SAMPLE CODE "AS IS" AND WITH ALL FAULTS, 
-AND WITHOUT ANY WARRANTY WHATSOEVER.� MICROSOFT EXPRESSLY DISCLAIMS ALL WARRANTIES 
-WITH RESPECT TO THE SOURCE CODE, INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.� THERE IS NO WARRANTY OF TITLE OR 
+/* MICROSOFT PROVIDES SAMPLE CODE "AS IS" AND WITH ALL FAULTS,
+AND WITHOUT ANY WARRANTY WHATSOEVER.� MICROSOFT EXPRESSLY DISCLAIMS ALL WARRANTIES
+WITH RESPECT TO THE SOURCE CODE, INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.� THERE IS NO WARRANTY OF TITLE OR
 NONINFRINGEMENT FOR THE SOURCE CODE. */
 
 /* Copyright (c) Microsoft Corporation. All rights reserved. */
@@ -18,10 +18,10 @@ this.Parse = function (dataModelName)
 {
 	if (typeof(dataModelName) != 'string')
 		throw "Internal error. The data model name must be a string.";
-	
+
 	if (dataModelName.substring(0, 4) == "cmi.")
 	{
-		if (CmiDataModels[dataModelName] != null) 
+		if (CmiDataModels[dataModelName] != null)
 			return CmiDataModels[dataModelName];
 
 		// Then search each regular expression
@@ -32,10 +32,10 @@ this.Parse = function (dataModelName)
 				return RegexpDataModelDelegates[i].Parser(dataModelName);
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	// by default, a data model is read-write
 	return new DataModel(true, true, false);
 }
@@ -60,13 +60,13 @@ function RegExpValidatorPair(regexp, parserDelegate)
 function ParserDataModel_Cmi_Objectives(name)
 {
 	var subname = name.substring("cmi.objectives.".length, name.length);
-	
+
 	var dotIndex = subname.search(/\./);
 	// get the index number. It should be an integer
 	var myIndex = subname.substring(0, dotIndex);
 	var indexRequest = new Object();
 	indexRequest['cmi.objectives'] = myIndex;
-	
+
 	subname = subname.substring(dotIndex + 1, subname.length);
 	switch (subname)
 	{
@@ -87,13 +87,13 @@ function ParserDataModel_Cmi_Objectives(name)
 function ParserDataModel_Cmi_Interactions(name)
 {
 	var subname = name.substring("cmi.interactions.".length, name.length);
-	
+
 	var dotIndex = subname.search(/\./);
 	// get the index number. It should be an integer
 	var myIndex = subname.substring(0, dotIndex);
 	var indexRequest = new Object();
 	indexRequest['cmi.interactions'] = myIndex;
-	
+
 	subname = subname.substring(dotIndex + 1, subname.length);
 	switch (subname)
 	{
@@ -106,8 +106,8 @@ function ParserDataModel_Cmi_Interactions(name)
 	case 'weighting':
 		return new DataModel(false, true, false, "CmiDecimal", indexRequest);
 	case 'student_response':
-		return new DataModel(false, true, false, "GetValue('" + 
-				"cmi.interactions." + myIndex + ".type')", 
+		return new DataModel(false, true, false, "GetValue('" +
+				"cmi.interactions." + myIndex + ".type')",
 				indexRequest);
 	case 'result':
 		return new DataModel(false, true, false, "CmiResult", indexRequest);
@@ -120,29 +120,29 @@ function ParserDataModel_Cmi_Interactions(name)
 	case 'correct_responses._count':
 		return new DataModel(true, false, true, "CmiInteger", indexRequest, '0');
 	}
-	
+
 	// case objectives.n.id
 	if (subname.search(/^objectives\.(0|[1-9][0-9]*)\.id$/) != -1)
 	{
 		var objIndex = subname.substring('objectives.'.length, subname.length);
 		objIndex = objIndex.substring(0, objIndex.indexOf("."));
-		
+
 		indexRequest['cmi.interactions.' + myIndex + '.objectives'] = objIndex;
 		return new DataModel(false, true, false, "CmiIdentifier", indexRequest);
 	}
-	
+
 	// case correct_responses.m.pattern
 	if (subname.search(/^correct_responses\.(0|[1-9][0-9]*)\.pattern$/) != -1)
 	{
 		var objIndex = subname.substring('correct_responses.'.length, subname.length);
 		objIndex = objIndex.substring(0, objIndex.indexOf("."));
-		
+
 		indexRequest['cmi.interactions.' + myIndex + '.correct_responses'] = objIndex;
-		return new DataModel(false, true, false, "GetValue('" + 
-				"cmi.interactions." + myIndex + ".type')", 
+		return new DataModel(false, true, false, "GetValue('" +
+				"cmi.interactions." + myIndex + ".type')",
 				indexRequest);
 	}
-	
+
 	return null;
 }
 
@@ -169,7 +169,7 @@ function InitializeDataModels()
 	CmiDataModels['cmi.launch_data'] = new DataModel(true, false, false, "CmiString4096", null, "");
 	CmiDataModels['cmi.comments'] = new DataModel(true, true, false, "CmiString4096", null, "");
 	CmiDataModels['cmi.comments_from_lms'] = new DataModel(true, false, false, "CmiString4096", null, "");
-	
+
 	CmiDataModels['cmi.objectives._children'] = new DataModel(true, false, true, "CmiString255", null, "id,score,status");
 	CmiDataModels['cmi.objectives._count'] = new DataModel(true, false, true, "CmiCount", null, "0");
 	RegexpDataModelDelegates.push(new RegExpValidatorPair(/^cmi\.objectives\.(0|[1-9][0-9]*)\.(id|score\.(_children|raw|min|max)|status)$/, ParserDataModel_Cmi_Objectives));
@@ -184,7 +184,7 @@ function InitializeDataModels()
 	CmiDataModels['cmi.student_preference.language'] = new DataModel(true, true, false, "CmiString255", null, "");
 	CmiDataModels['cmi.student_preference.speed'] = new DataModel(true, true, false, "CmiIntegerNegative100To100", null, "0");
 	CmiDataModels['cmi.student_preference.text'] = new DataModel(true, true, false, "CmiIntegerNegativeOneToOne", null, "0");
-	
+
 	CmiDataModels['cmi.interactions._children'] = new DataModel(true, false, true, "CmiString255", null, "id,objectives,time,type,correct_responses,weighting,student_response,result,latency");
 	CmiDataModels['cmi.interactions._count'] = new DataModel(true, false, true, "CmiCount", null, "0");
 	RegexpDataModelDelegates.push(new RegExpValidatorPair(/^cmi\.interactions\.(0|[1-9][0-9]*)\./, ParserDataModel_Cmi_Interactions));

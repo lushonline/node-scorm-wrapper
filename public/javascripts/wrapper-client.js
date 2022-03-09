@@ -5,6 +5,7 @@ $(function() {
   mySite.Logger.info(JSON.stringify(response));
   mySite.SetMasteryLevel(response.mastery ? response.mastery.toString() : '');
   mySite.SetStudentId(new Date().getTime().toString());
+  mySite.SetStudentId('tester@akara.co.uk');
   mySite.SetDataFromLMS(response.datafromlms ? response.datafromlms : '');
   var strWindowFeatures = 'menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes';
 
@@ -25,6 +26,7 @@ $(function() {
     mySite.Init();
     mySite.SetMasteryLevel(response.mastery ? response.mastery.toString() : '');
     mySite.SetStudentId(new Date().getTime().toString());
+    mySite.SetStudentId('tester@akara.co.uk');
     mySite.SetDataFromLMS(response.datafromlms ? response.datafromlms : '');
   });
 });
